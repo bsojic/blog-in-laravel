@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\DashboardController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,15 +18,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-
+// Register
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest')->name('register');
 Route::post('/register', [RegisterController::class, 'storeUser'])->name('store.user');
 
-Route::get('login', [LoginController::class, 'index'])->name('login');
+// Login
+Route::get('login', [LoginController::class, 'index'])->name('login.form');
 Route::post('login', [LoginController::class, 'store'])->name('login.user');
 
-Route::get('/', function () {
-    return view('posts.index');
-});
+// Logout
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
