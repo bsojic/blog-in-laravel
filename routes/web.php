@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\LocalizationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,3 +33,6 @@ Route::post('login', [LoginController::class, 'store'])->name('login.user');
 // Logout
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
+
+
+Route::get('lang/{locale}', [LocalizationController::class, 'index']);
